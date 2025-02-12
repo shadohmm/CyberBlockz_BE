@@ -1,0 +1,53 @@
+add corse as middle ware and ristrict the other domains
+*************************
+const cors = require("cors");
+app.use(cors());
+****************************
+app.use(
+  cors({
+    origin: "http://localhost:4200", // Angular app's URL
+  })
+);
+*****************************************
+
+4. Proxy Configuration (Optional)
+For convenience during development, you can configure a proxy in Angular to avoid specifying the full backend URL in your service.
+
+Create Proxy Configuration:
+In your Angular project, create a proxy.conf.json file:
+
+json
+Copy
+Edit
+{
+  "/api": {
+    "target": "http://localhost:3000",
+    "secure": false
+  }
+}
+Update angular.json:
+In the serve options of angular.json, add the proxy configuration:
+
+json
+Copy
+Edit
+"architect": {
+  "serve": {
+    "options": {
+      "proxyConfig": "proxy.conf.json"
+    }
+  }
+}
+Update API URL in the Service:
+Now, you can use a relative URL in api.service.ts:
+
+typescript
+Copy
+Edit
+private apiUrl = '/api'; // Proxy will handle the rest
+Start your Angular app with:
+
+bash
+Copy
+Edit
+ng serve
